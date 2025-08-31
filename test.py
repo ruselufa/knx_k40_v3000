@@ -31,9 +31,9 @@ def value_to_knx_bytes(value):
     return byte1, byte2
 
 # Пример: KNX → значение
-print(knx_bytes_to_value(0x0d, 0x14))  # → 25.0
-print(knx_bytes_to_value(0x0D, 0xaa))  # → 26.0
-print(knx_bytes_to_value(0x0e, 0x40))  # → 23.0
+print(knx_bytes_to_value(0x01, 0xf4))  # → 25.0
+print(knx_bytes_to_value(0x87, 0x38))  # → 26.0
+print(knx_bytes_to_value(0x86, 0x70))  # → 23.0
 
 # Пример: значение → KNX
 print(value_to_knx_bytes(25.0))  # → (0x0D, 0x05)

@@ -11,21 +11,24 @@ defineVirtualDevice("KNX_HVAC_System", {
             value: 0,
             readonly: true,
             title: "67 - Базовая уставка Comfort (°C)",
-            units: "°C"
+            units: "°C",
+            order: 1
         },
         "base_cool_standby": {
             type: "value",
             value: 0,
             readonly: true,
             title: "67 - Базовая уставка Standby (°C)",
-            units: "°C"
+            units: "°C",
+            order: 2
         },
         "base_cool_eco": {
             type: "value",
             value: 0,
             readonly: true,
             title: "67 - Базовая уставка ECO (°C)",
-            units: "°C"
+            units: "°C",
+            order: 3
         },
         
         // === ПАРАМЕТР 69 - Сдвиги уставок кондиционирования ===
@@ -34,21 +37,24 @@ defineVirtualDevice("KNX_HVAC_System", {
             value: 0,
             readonly: true,
             title: "69 - Сдвиг Comfort (K)",
-            units: "K"
+            units: "K",
+            order: 4
         },
         "shift_cool_standby": {
             type: "value",
             value: 0,
             readonly: true,
             title: "69 - Сдвиг Standby (K)",
-            units: "K"
+            units: "K",
+            order: 5
         },
         "shift_cool_eco": {
             type: "value",
             value: 0,
             readonly: true,
             title: "69 - Сдвиг ECO (K)",
-            units: "K"
+            units: "K",
+            order: 6
         },
         
         // === ПАРАМЕТР 105 - Рабочие уставки кондиционирования ===
@@ -57,21 +63,24 @@ defineVirtualDevice("KNX_HVAC_System", {
             value: 0,
             readonly: true,
             title: "105 - Рабочая уставка Comfort (°C)",
-            units: "°C"
+            units: "°C",
+            order: 7
         },
         "work_cool_standby": {
             type: "value",
             value: 0,
             readonly: true,
             title: "105 - Рабочая уставка Standby (°C)",
-            units: "°C"
+            units: "°C",
+            order: 8
         },
         "work_cool_eco": {
             type: "value",
             value: 0,
             readonly: true,
             title: "105 - Рабочая уставка ECO (°C)",
-            units: "°C"
+            units: "°C",
+            order: 9
         },
         
         // === ДОПОЛНИТЕЛЬНЫЕ ПАРАМЕТРЫ ===
@@ -80,54 +89,63 @@ defineVirtualDevice("KNX_HVAC_System", {
             value: 0,
             readonly: true,
             title: "96 - Позиция клапана охлаждения",
-            units: "%"
+            units: "%",
+            order: 10
         },
         "fan_speed": {
             type: "value",
             value: 0,
             readonly: true,
             title: "97 - Скорость вентилятора",
-            units: "%"
+            units: "%",
+            order: 11
         },
         "hvac_mode": {
             type: "text",
             value: "Неизвестно",
             readonly: true,
-            title: "103 - Режим работы HVAC"
+            title: "103 - Режим работы HVAC",
+            order: 12
         },
         "return_air_temp": {
             type: "value",
             value: 0,
             readonly: true,
             title: "108 - Температура возвратного воздуха",
-            units: "°C"
+            units: "°C",
+            order: 13
         },
         
         // === РУЧНОЕ УПРАВЛЕНИЕ ===
         "hvac_mode_manual": {
-            type: "switch",
-            value: false,
+            type: "value",
+            value: 0,
             readonly: false,
-            title: "60 - Режим HVAC (ручное управление)"
+            title: "60 - Режим HVAC (0=Auto, 1=Comfort, 2=Standby, 3=Economy, 4=Frost)",
+            units: "",
+            order: 14
         },
         "hvac_mode_text": {
             type: "text",
             value: "Auto",
             readonly: true,
-            title: "60 - Текущий режим HVAC"
+            title: "60 - Текущий режим HVAC",
+            order: 15
         },
         "fan_speed_manual": {
             type: "value",
             value: 0,
             readonly: false,
             title: "74 - Скорость вентилятора (ручное управление)",
-            units: "%"
+            units: "%",
+            order: 16
         },
         "fan_speed_text": {
             type: "text",
             value: "Авто",
             readonly: true,
-            title: "74 - Текущая скорость вентилятора"
+            title: "74 - Текущая скорость вентилятора",
+            order: 17
         },
         
         // === УПРАВЛЕНИЕ УСТАВКАМИ ===
@@ -136,28 +154,32 @@ defineVirtualDevice("KNX_HVAC_System", {
             value: 26,
             readonly: false,
             title: "Задать температуру Comfort (°C)",
-            units: "°C"
+            units: "°C",
+            order: 18
         },
         "set_standby_temp": {
             type: "value",
             value: 24,
             readonly: false,
             title: "Задать температуру Standby (°C)",
-            units: "°C"
+            units: "°C",
+            order: 19
         },
         "set_eco_temp": {
             type: "value",
             value: 22,
             readonly: false,
             title: "Задать температуру ECO (°C)",
-            units: "°C"
+            units: "°C",
+            order: 20
         },
         
         "test_button": {
             type: "switch",
             value: false,
             readonly: false,
-            title: "Тест - Вычислить и отправить сдвиги"
+            title: "Тест - Вычислить и отправить сдвиги",
+            order: 21
         },
         
         // === СТАТУС ===
@@ -165,7 +187,8 @@ defineVirtualDevice("KNX_HVAC_System", {
             type: "text",
             value: "Ожидание данных...",
             readonly: true,
-            title: "Статус системы"
+            title: "Статус системы",
+            order: 22
         }
     }
 });
@@ -185,253 +208,221 @@ function knxBytesToValue(byte1, byte2) {
     return Math.round(value * 100) / 100;
 }
 
-// Новая функция для преобразования 2 байтов в float (IEEE 754 half-precision)
-function bytesToFloat(byte1, byte2) {
+// УДАЛЯЕМ simpleBytesToFloat - используем только knx2bToFloat для KNX DPT 9.xxx
+
+// === DPT9 decode: 2 байта -> число (°C/K) ===
+function knx2bToFloat(b1, b2) {
     try {
-        // Преобразуем hex строки в числа
-        var b1 = parseInt(byte1, 16);
-        var b2 = parseInt(byte2, 16);
+        var hi = (typeof b1 === 'string') ? parseInt(b1, 16) : (b1|0);
+        var lo = (typeof b2 === 'string') ? parseInt(b2, 16) : (b2|0);
+        var raw = (hi << 8) | lo;
+
+        var sign = (raw & 0x8000) ? -1 : 1;
+        var exp  = (raw >> 11) & 0x0F;
+        var mant = raw & 0x07FF;              // 11 бит
+        if (mant & 0x400) mant = mant - 0x800;  // sign-extend до -2048..+2047
+
+        var val = sign * mant * Math.pow(2, exp) / 100.0;
+        var result = Math.round(val * 100) / 100;
         
-        // Собираем 16-битное число
-        var uint16 = (b1 << 8) | b2;
+        log('KNX decode: ' + b1 + ' ' + b2 + ' -> ' + result);
+        return result;
         
-        // Проверяем на специальные значения
-        if (uint16 === 0) return 0.0;
-        if (uint16 === 0x8000) return -0.0;
-        if (uint16 === 0x7C00) return Infinity;
-        if (uint16 === 0xFC00) return -Infinity;
-        if ((uint16 & 0x7C00) === 0x7C00) return NaN;
-        
-        // Извлекаем компоненты
-        var sign = (uint16 >> 15) & 0x1;
-        var exponent = (uint16 >> 10) & 0x1F;
-        var mantissa = uint16 & 0x3FF;
-        
-        // Нормализуем мантиссу
-        if (exponent === 0) {
-            // Денормализованные числа
-            exponent = -14;
-        } else {
-            exponent = exponent - 15;
-            mantissa = mantissa | 0x400; // Добавляем скрытый бит
-        }
-        
-        // Вычисляем значение
-        var value = mantissa * Math.pow(2, exponent - 10);
-        
-        // Применяем знак
-        if (sign) value = -value;
-        
-        return Math.round(value * 1000) / 1000; // Округляем до 3 знаков
     } catch (error) {
-        log('Ошибка при преобразовании в float: ' + error);
+        log('Ошибка в knx2bToFloat: ' + error);
         return 0.0;
     }
 }
 
-// Альтернативная функция для простого преобразования в float
-function simpleBytesToFloat(byte1, byte2) {
+// Функция для разбора триплета KNX (берем ПОСЛЕДНИЕ 6 байтов)
+function parseKnxTriplet(hexString) {
     try {
-        var b1 = parseInt(byte1, 16);
-        var b2 = parseInt(byte2, 16);
+        if (!hexString || typeof hexString !== 'string') {
+            log('Ошибка: hexString не является строкой или пустой');
+            return null;
+        }
         
-        // Используем правильный алгоритм KNX (как в Python коде)
-        var data = (b1 << 8) + b2;
-        var sign = data >> 15;
-        var exponent = (data >> 11) & 0x0F;
-        var mantissa = parseFloat(data & 0x07FF);
-
-        if (sign === 1) {
-            mantissa = mantissa - 2048;
+        log('Начинаем разбор триплета: ' + hexString);
+        
+        // "0x00 0x0d 0x14 0x0d 0xaa 0x0e 0x40" -> берем ПОСЛЕДНИЕ 6 токенов
+        var parts = hexString.trim().split(/\s+/);
+        var cleanParts = [];
+        
+        // Фильтруем пустые элементы и нормализуем формат
+        for (var i = 0; i < parts.length; i++) {
+            if (parts[i] && parts[i].length > 0) {
+                var part = parts[i];
+                if (!part.toLowerCase().startsWith('0x')) {
+                    part = '0x' + part;
+                }
+                cleanParts.push(part);
+            }
+        }
+        
+        log('Очищенные части: ' + cleanParts.join(' '));
+        
+        // Берем последние 6 байтов
+        var tokens = [];
+        var startIndex = Math.max(0, cleanParts.length - 6);
+        for (var j = startIndex; j < cleanParts.length; j++) {
+            tokens.push(cleanParts[j]);
+        }
+        
+        if (tokens.length !== 6) {
+            log('Ошибка: ожидается 6 байтов, получено: ' + tokens.length);
+            return null;
         }
 
-        var value = mantissa * Math.pow(2, exponent) / 100;
-        return Math.round(value * 100) / 100; // Округляем до 2 знаков
+        log('Разбор триплета: ' + hexString + ' -> последние 6 байтов: ' + tokens.join(' '));
+
+        var result = {
+            val1: knx2bToFloat(tokens[0], tokens[1]),
+            val2: knx2bToFloat(tokens[2], tokens[3]),
+            val3: knx2bToFloat(tokens[4], tokens[5])
+        };
+        
+        log('Результат разбора: val1=' + result.val1 + ', val2=' + result.val2 + ', val3=' + result.val3);
+        return result;
         
     } catch (error) {
-        log('Ошибка при простом преобразовании в float: ' + error);
-        return 0.0;
-    }
-}
-
-// Функция для извлечения байтов из hex строки (убираем только первый 0x00)
-function extractBytesFromHex(hexString) {
-    var allBytes = hexString.split(' ');
-    
-    // Убираем только первый байт, если он 0x00
-    if (allBytes.length > 0 && allBytes[0] === '0x00') {
-        allBytes = allBytes.slice(1); // Убираем только первый элемент
-    }
-    
-    log('Все байты после удаления первого 0x00: ' + allBytes.join(' '));
-    
-    // Проверяем количество байтов и обрабатываем соответственно
-    if (allBytes.length >= 6) {
-        // Полные 6 байтов (3 значения)
-        return {
-            byte1: allBytes[0],  // 0x86
-            byte2: allBytes[1],  // 0xd4
-            byte3: allBytes[2],  // 0x00
-            byte4: allBytes[3],  // 0x00
-            byte5: allBytes[4],  // 0x00
-            byte6: allBytes[5],  // 0x00
-            count: 6
-        };
-    } else if (allBytes.length >= 4) {
-        // 4 байта (2 значения)
-        return {
-            byte1: allBytes[0],
-            byte2: allBytes[1],
-            byte3: allBytes[2],
-            byte4: allBytes[3],
-            byte5: '0x00',
-            byte6: '0x00',
-            count: 4
-        };
-    } else if (allBytes.length >= 2) {
-        // 2 байта (1 значение)
-        return {
-            byte1: allBytes[0],
-            byte2: allBytes[1],
-            byte3: '0x00',
-            byte4: '0x00',
-            byte5: '0x00',
-            byte6: '0x00',
-            count: 2
-        };
-    }
-    return null;
-}
-
-// Основная функция обработки параметра (6 байтов = 3 значения)
-function processParameter(hexValue) {
-    if (!hexValue || typeof hexValue !== 'string') {
-        log('Ошибка: hexValue не является строкой или пустой');
-        return null;
-    }
-    
-    log('Обрабатываем строку: ' + hexValue);
-    var bytes = extractBytesFromHex(hexValue);
-    if (!bytes) {
-        log('Ошибка: не удалось извлечь байты');
-        return null;
-    }
-    
-    try {
-        // Используем новую функцию float для всех значений
-        var value1 = simpleBytesToFloat(bytes.byte1, bytes.byte2);
-        var value2 = (bytes.count >= 4) ? simpleBytesToFloat(bytes.byte3, bytes.byte4) : 0.0;
-        var value3 = (bytes.count >= 6) ? simpleBytesToFloat(bytes.byte5, bytes.byte6) : 0.0;
-        
-        log('Обработанные значения (float): val1=' + value1 + ', val2=' + value2 + ', val3=' + value3);
-        
-        return {
-            val1: value1,
-            val2: value2,
-            val3: value3
-        };
-    } catch (error) {
-        log('Ошибка при обработке параметра: ' + error);
+        log('Ошибка в parseKnxTriplet: ' + error);
         return null;
     }
 }
 
-// Правила для Wirenboard
+// Правила для Wirenboard - обработка всех параметров KNX
 defineRule({
     when: function() {
-        return true;
+        // Проверяем наличие данных в любом из параметров
+        return dev['Room_2_IN/TRSetpSetCool_67'] || 
+               dev['Room_2_IN/TRSetpSetCoolSh_69'] || 
+               dev['Room_2_OUT/TRSetpSetCoolEff_105'] ||
+               dev['Room_2_OUT/ActPosCoolStA_96'] ||
+               dev['Room_2_OUT/FanSpeed_97'] ||
+               dev['Room_2_OUT/HVACModeEff_103'] ||
+               dev['Room_2_OUT/TReturnAir_108'] ||
+               dev['Room_2_IN/HVACModeOptim_60'] ||
+               dev['Room_2_IN/FanSpeedUser_74'];
     },
     then: function() {
         var status = "Обработка...";
         var hasData = false;
         
         // Обработка параметра 67 (6 байтов = 3 значения)
-        if (dev['Room_2_IN/TRSetpSetCool_67']) {
-            var param67Value = dev['Room_2_IN/TRSetpSetCool_67'];
-            log('Получен параметр 67: ' + param67Value + ' (тип: ' + typeof param67Value + ')');
-            
-            var processedValues67 = processParameter(param67Value);
-            
-            if (processedValues67 !== null) {
-                // Сохраняем все 3 значения в виртуальное устройство
-                dev['KNX_HVAC_System/base_cool_comfort'] = processedValues67.val1;
-                dev['KNX_HVAC_System/base_cool_standby'] = processedValues67.val2;
-                dev['KNX_HVAC_System/base_cool_eco'] = processedValues67.val3;
+        try {
+            if (dev['Room_2_IN/TRSetpSetCool_67']) {
+                var param67Value = dev['Room_2_IN/TRSetpSetCool_67'];
+                log('Получен параметр 67: ' + param67Value + ' (тип: ' + typeof param67Value + ')');
                 
-                log('Параметр 67 обработан: ' + param67Value + ' → ' + 
-                    'Значение 1: ' + processedValues67.val1 + 
-                    ', Значение 2: ' + processedValues67.val2 + 
-                    ', Значение 3: ' + processedValues67.val3);
-                hasData = true;
+                var processedValues67 = parseKnxTriplet(param67Value);
+                
+                if (processedValues67 !== null) {
+                    // Сохраняем все 3 значения в виртуальное устройство
+                    dev['KNX_HVAC_System/base_cool_comfort'] = processedValues67.val1;
+                    dev['KNX_HVAC_System/base_cool_standby'] = processedValues67.val2;
+                    dev['KNX_HVAC_System/base_cool_eco'] = processedValues67.val3;
+                    
+                    log('Параметр 67 обработан: ' + param67Value + ' → ' + 
+                        'Значение 1: ' + processedValues67.val1 + 
+                        ', Значение 2: ' + processedValues67.val2 + 
+                        ', Значение 3: ' + processedValues67.val3);
+                    hasData = true;
+                } else {
+                    log('Ошибка: параметр 67 не удалось обработать');
+                }
             } else {
-                log('Ошибка: параметр 67 не удалось обработать');
+                log('Параметр 67 не найден или пустой');
             }
-        } else {
-            log('Параметр 67 не найден или пустой');
+        } catch (error) {
+            log('Ошибка при обработке параметра 67: ' + error);
         }
         
         // Обработка параметра 69 (6 байтов = 3 значения)
-        if (dev['Room_2_IN/TRSetpSetCoolSh_69']) {
-            var param69Value = dev['Room_2_IN/TRSetpSetCoolSh_69'];
-            log('Получен параметр 69: ' + param69Value + ' (тип: ' + typeof param69Value + ')');
-            
-            var processedValues69 = processParameter(param69Value);
-            
-            if (processedValues69 !== null) {
-                // Сохраняем все 3 значения в виртуальное устройство
-                dev['KNX_HVAC_System/shift_cool_comfort'] = processedValues69.val1;
-                dev['KNX_HVAC_System/shift_cool_standby'] = processedValues69.val2;
-                dev['KNX_HVAC_System/shift_cool_eco'] = processedValues69.val3;
+        try {
+            if (dev['Room_2_IN/TRSetpSetCoolSh_69']) {
+                var param69Value = dev['Room_2_IN/TRSetpSetCoolSh_69'];
+                log('Получен параметр 69: ' + param69Value + ' (тип: ' + typeof param69Value + ')');
                 
-                log('Параметр 69 обработан: ' + param69Value + ' → ' + 
-                    'Значение 1: ' + processedValues69.val1 + 
-                    ', Значение 2: ' + processedValues69.val2 + 
-                    ', Значение 3: ' + processedValues69.val3);
-                hasData = true;
+                var processedValues69 = parseKnxTriplet(param69Value);
+                
+                if (processedValues69 !== null) {
+                    // Сохраняем все 3 значения в виртуальное устройство
+                    dev['KNX_HVAC_System/shift_cool_comfort'] = processedValues69.val1;
+                    dev['KNX_HVAC_System/shift_cool_standby'] = processedValues69.val2;
+                    dev['KNX_HVAC_System/shift_cool_eco'] = processedValues69.val3;
+                    
+                    log('Параметр 69 обработан: ' + param69Value + ' → ' + 
+                        'Значение 1: ' + processedValues69.val1 + 
+                        ', Значение 2: ' + processedValues69.val2 + 
+                        ', Значение 3: ' + processedValues69.val3);
+                    hasData = true;
+                } else {
+                    log('Ошибка: параметр 69 не удалось обработать');
+                }
             } else {
-                log('Ошибка: параметр 69 не удалось обработать');
+                log('Параметр 69 не найден или пустой');
             }
-        } else {
-            log('Параметр 69 не найден или пустой');
+        } catch (error) {
+            log('Ошибка при обработке параметра 69: ' + error);
         }
         
         // Обработка параметра 105 (6 байтов = 3 значения)
-        if (dev['Room_2_OUT/TRSetpSetCoolEff_105']) {
-            var param105Value = dev['Room_2_OUT/TRSetpSetCoolEff_105'];
-            log('Получен параметр 105: ' + param105Value + ' (тип: ' + typeof param105Value + ')');
-            
-            var processedValues105 = processParameter(param105Value);
-            
-            if (processedValues105 !== null) {
-                // Сохраняем все 3 значения в виртуальное устройство
-                dev['KNX_HVAC_System/work_cool_comfort'] = processedValues105.val1;
-                dev['KNX_HVAC_System/work_cool_standby'] = processedValues105.val2;
-                dev['KNX_HVAC_System/work_cool_eco'] = processedValues105.val3;
+        try {
+            if (dev['Room_2_OUT/TRSetpSetCoolEff_105']) {
+                var param105Value = dev['Room_2_OUT/TRSetpSetCoolEff_105'];
+                log('Получен параметр 105: ' + param105Value + ' (тип: ' + typeof param105Value + ')');
                 
-                log('Параметр 105 обработан: ' + param105Value + ' → ' + 
-                    'Значение 1: ' + processedValues105.val1 + 
-                    ', Значение 2: ' + processedValues105.val2 + 
-                    ', Значение 3: ' + processedValues105.val3);
-                hasData = true;
+                var processedValues105 = parseKnxTriplet(param105Value);
+                
+                if (processedValues105 !== null) {
+                    // Сохраняем все 3 значения в виртуальное устройство
+                    dev['KNX_HVAC_System/work_cool_comfort'] = processedValues105.val1;
+                    dev['KNX_HVAC_System/work_cool_standby'] = processedValues105.val2;
+                    dev['KNX_HVAC_System/work_cool_eco'] = processedValues105.val3;
+                    
+                    log('Параметр 105 обработан: ' + param105Value + ' → ' + 
+                        'Значение 1: ' + processedValues105.val1 + 
+                        ', Значение 2: ' + processedValues105.val2 + 
+                        ', Значение 3: ' + processedValues105.val3);
+                    hasData = true;
+                } else {
+                    log('Ошибка: параметр 105 не удалось обработать');
+                }
             } else {
-                log('Ошибка: параметр 105 не удалось обработать');
+                log('Параметр 105 не найден или пустой');
             }
-        } else {
-            log('Параметр 105 не найден или пустой');
+        } catch (error) {
+            log('Ошибка при обработке параметра 105: ' + error);
         }
         
         // === ОБРАБОТКА ДОПОЛНИТЕЛЬНЫХ ПАРАМЕТРОВ ===
+        
+        // Автоматически пересчитываем сдвиги при получении новых данных от KNX
+        if (hasData) {
+            setTimeout(function() {
+                log('Автоматически пересчитываем сдвиги после получения данных от KNX...');
+                calculateAndSendShifts();
+            }, 3000);
+        }
         
         // Параметр 96 - Позиция клапана охлаждения
         if (dev['Room_2_OUT/ActPosCoolStA_96']) {
             var posValue = dev['Room_2_OUT/ActPosCoolStA_96'];
             log('Получен параметр 96: ' + posValue + ' (тип: ' + typeof posValue + ')');
             
-            // Преобразуем значение 0-255 в проценты 0-100%
-            var posPercent = Math.round((posValue / 255) * 100);
-            dev['KNX_HVAC_System/act_pos_cool'] = posPercent;
+            // Проверяем, не является ли значение уже в процентах
+            var posPercent;
+            if (posValue <= 100) {
+                // Уже в процентах
+                posPercent = Math.round(posValue);
+                log('Значение уже в процентах: ' + posPercent + '%');
+            } else {
+                // Преобразуем значение 0-255 в проценты 0-100%
+                posPercent = Math.round((posValue / 255) * 100);
+                log('Преобразовано из 0-255 в проценты: ' + posValue + ' → ' + posPercent + '%');
+            }
             
-            log('Параметр 96 обработан: ' + posValue + ' → ' + posPercent + '%');
+            dev['KNX_HVAC_System/act_pos_cool'] = posPercent;
             hasData = true;
         }
         
@@ -440,11 +431,19 @@ defineRule({
             var fanValue = dev['Room_2_OUT/FanSpeed_97'];
             log('Получен параметр 97: ' + fanValue + ' (тип: ' + typeof fanValue + ')');
             
-            // Преобразуем значение 0-255 в проценты 0-100%
-            var fanPercent = Math.round((fanValue / 255) * 100);
-            dev['KNX_HVAC_System/fan_speed'] = fanPercent;
+            // Проверяем, не является ли значение уже в процентах
+            var fanPercent;
+            if (fanValue <= 100) {
+                // Уже в процентах
+                fanPercent = Math.round(fanValue);
+                log('Значение уже в процентах: ' + fanPercent + '%');
+            } else {
+                // Преобразуем значение 0-255 в проценты 0-100%
+                fanPercent = Math.round((fanValue / 255) * 100);
+                log('Преобразовано из 0-255 в проценты: ' + fanValue + ' → ' + fanPercent + '%');
+            }
             
-            log('Параметр 97 обработан: ' + fanValue + ' → ' + fanPercent + '%');
+            dev['KNX_HVAC_System/fan_speed'] = fanPercent;
             hasData = true;
         }
         
@@ -553,52 +552,121 @@ defineRule({
         var standbyChanged = dev['KNX_HVAC_System/set_standby_temp'];
         var ecoChanged = dev['KNX_HVAC_System/set_eco_temp'];
         
-        log('Проверка правила: comfort=' + comfortChanged + ', standby=' + standbyChanged + ', eco=' + ecoChanged);
+        log('🔍 Проверка правила изменения уставок: comfort=' + comfortChanged + ', standby=' + standbyChanged + ', eco=' + ecoChanged);
         
-        return comfortChanged || standbyChanged || ecoChanged;
+        // Возвращаем true только если есть реальные изменения
+        if (comfortChanged || standbyChanged || ecoChanged) {
+            log('✅ Обнаружены изменения уставок - правило активировано');
+            return true;
+        }
+        
+        return false;
     },
     then: function() {
-        log('=== ОБНАРУЖЕНО ИЗМЕНЕНИЕ УСТАВОК ===');
-        log('set_comfort_temp: ' + dev['KNX_HVAC_System/set_comfort_temp']);
-        log('set_standby_temp: ' + dev['KNX_HVAC_System/set_standby_temp']);
-        log('set_eco_temp: ' + dev['KNX_HVAC_System/set_eco_temp']);
+        log('🚀 === ОБНАРУЖЕНО ИЗМЕНЕНИЕ УСТАВОК ===');
+        log('📊 set_comfort_temp: ' + dev['KNX_HVAC_System/set_comfort_temp']);
+        log('📊 set_standby_temp: ' + dev['KNX_HVAC_System/set_standby_temp']);
+        log('📊 set_eco_temp: ' + dev['KNX_HVAC_System/set_eco_temp']);
         
         dev['KNX_HVAC_System/status'] = "Вычисление сдвигов...";
         
         // Небольшая задержка для стабилизации значений
         setTimeout(function() {
-            log('Вызываем calculateAndSendShifts...');
+            log('⏳ Вызываем calculateAndSendShifts после изменения уставок...');
             calculateAndSendShifts();
         }, 1000);
     }
 });
 
-// Дополнительное правило для принудительного тестирования
+// Правило для автоматического обновления уставок при получении базовых значений
 defineRule({
     when: function() {
-        return true; // Всегда активно
+        // Срабатывает при изменении базовых уставок от KNX
+        return dev['KNX_HVAC_System/base_cool_comfort'] || 
+               dev['KNX_HVAC_System/base_cool_standby'] || 
+               dev['KNX_HVAC_System/base_cool_eco'];
     },
     then: function() {
-        // Проверяем, есть ли данные в базовых уставках
+        log('📥 === ПОЛУЧЕНЫ БАЗОВЫЕ УСТАВКИ ОТ KNX ===');
+        
         var baseComfort = dev['KNX_HVAC_System/base_cool_comfort'];
         var baseStandby = dev['KNX_HVAC_System/base_cool_standby'];
         var baseEco = dev['KNX_HVAC_System/base_cool_eco'];
         
         if (baseComfort && baseStandby && baseEco) {
-            log('Базовые уставки загружены: Comfort=' + baseComfort + ', Standby=' + baseStandby + ', ECO=' + baseEco);
+            log('📊 Базовые уставки загружены: Comfort=' + baseComfort + ', Standby=' + baseStandby + ', ECO=' + baseEco);
             
             // Устанавливаем начальные значения для управления, если они не установлены
-            if (!dev['KNX_HVAC_System/set_comfort_temp']) {
+            if (typeof dev['KNX_HVAC_System/set_comfort_temp'] === 'undefined' || dev['KNX_HVAC_System/set_comfort_temp'] === null) {
                 dev['KNX_HVAC_System/set_comfort_temp'] = baseComfort;
-                log('Установлена начальная уставка Comfort: ' + baseComfort);
+                log('✅ Установлена начальная уставка Comfort: ' + baseComfort);
             }
-            if (!dev['KNX_HVAC_System/set_standby_temp']) {
+            if (typeof dev['KNX_HVAC_System/set_standby_temp'] === 'undefined' || dev['KNX_HVAC_System/set_standby_temp'] === null) {
                 dev['KNX_HVAC_System/set_standby_temp'] = baseStandby;
-                log('Установлена начальная уставка Standby: ' + baseStandby);
+                log('✅ Установлена начальная уставка Standby: ' + baseStandby);
             }
-            if (!dev['KNX_HVAC_System/set_eco_temp']) {
+            if (typeof dev['KNX_HVAC_System/set_eco_temp'] === 'undefined' || dev['KNX_HVAC_System/set_eco_temp'] === null) {
                 dev['KNX_HVAC_System/set_eco_temp'] = baseEco;
-                log('Установлена начальная уставка ECO: ' + baseEco);
+                log('✅ Установлена начальная уставка ECO: ' + baseEco);
+            }
+            
+            // Автоматически пересчитываем и отправляем сдвиги
+            setTimeout(function() {
+                log('🔄 Автоматически пересчитываем сдвиги после получения базовых уставок...');
+                calculateAndSendShifts();
+            }, 2000);
+        }
+    }
+});
+
+// Дополнительное правило для принудительной проверки изменений уставок (каждые 10 секунд)
+var lastCheckTime = 0;
+defineRule({
+    when: function() {
+        // Срабатывает каждые 10 секунд для проверки изменений
+        var currentTime = Date.now();
+        if (currentTime - lastCheckTime > 10000) { // 10 секунд
+            lastCheckTime = currentTime;
+            return true;
+        }
+        return false;
+    },
+    then: function() {
+        // Проверяем, есть ли базовые уставки и нужно ли пересчитать сдвиги
+        var baseComfort = dev['KNX_HVAC_System/base_cool_comfort'];
+        var baseStandby = dev['KNX_HVAC_System/base_cool_standby'];
+        var baseEco = dev['KNX_HVAC_System/base_cool_eco'];
+        
+        var setComfort = dev['KNX_HVAC_System/set_comfort_temp'];
+        var setStandby = dev['KNX_HVAC_System/set_standby_temp'];
+        var setEco = dev['KNX_HVAC_System/set_eco_temp'];
+        
+        // Если есть базовые уставки и заданные уставки отличаются от базовых
+        if (baseComfort && baseStandby && baseEco && setComfort && setStandby && setEco) {
+            var shiftComfort = setComfort - baseComfort;
+            var shiftStandby = setStandby - baseStandby;
+            var shiftEco = setEco - baseEco;
+            
+            // Проверяем, есть ли текущие сдвиги
+            var currentShiftComfort = dev['KNX_HVAC_System/shift_cool_comfort'];
+            var currentShiftStandby = dev['KNX_HVAC_System/shift_cool_standby'];
+            var currentShiftEco = dev['KNX_HVAC_System/shift_cool_eco'];
+            
+            // Если сдвиги не соответствуют заданным уставкам, пересчитываем
+            if (typeof currentShiftComfort === 'undefined' || 
+                typeof currentShiftStandby === 'undefined' || 
+                typeof currentShiftEco === 'undefined' ||
+                Math.abs(currentShiftComfort - shiftComfort) > 0.1 ||
+                Math.abs(currentShiftStandby - shiftStandby) > 0.1 ||
+                Math.abs(currentShiftEco - shiftEco) > 0.1) {
+                
+                log('🔄 Обнаружено несоответствие сдвигов - пересчитываем...');
+                log('Ожидаемые сдвиги: Comfort=' + shiftComfort + 'K, Standby=' + shiftStandby + 'K, ECO=' + shiftEco + 'K');
+                log('Текущие сдвиги: Comfort=' + currentShiftComfort + 'K, Standby=' + currentShiftStandby + 'K, ECO=' + currentShiftEco + 'K');
+                
+                setTimeout(function() {
+                    calculateAndSendShifts();
+                }, 1000);
             }
         }
     }
@@ -624,27 +692,67 @@ defineRule({
     }
 });
 
+// Правило для мониторинга параметра 69 (сдвиги уставок)
+defineRule({
+    when: function() {
+        // Срабатывает при изменении сдвигов уставок от KNX
+        return dev['KNX_HVAC_System/shift_cool_comfort'] || 
+               dev['KNX_HVAC_System/shift_cool_standby'] || 
+               dev['KNX_HVAC_System/shift_cool_eco'];
+    },
+    then: function() {
+        log('=== ПОЛУЧЕНЫ НОВЫЕ СДВИГИ УСТАВОК (ПАРАМЕТР 69) ===');
+        
+        var shiftComfort = dev['KNX_HVAC_System/shift_cool_comfort'];
+        var shiftStandby = dev['KNX_HVAC_System/shift_cool_standby'];
+        var shiftEco = dev['KNX_HVAC_System/shift_cool_eco'];
+        
+        log('Сдвиги Comfort: ' + shiftComfort + 'K, Standby: ' + shiftStandby + 'K, ECO: ' + shiftEco + 'K');
+        
+        // Обновляем статус
+        dev['KNX_HVAC_System/status'] = "Получены сдвиги: Comfort+" + shiftComfort + "K, Standby+" + shiftStandby + "K, ECO+" + shiftEco + "K";
+        
+        // Проверяем, нужно ли пересчитать рабочие уставки
+        var baseComfort = dev['KNX_HVAC_System/base_cool_comfort'];
+        var baseStandby = dev['KNX_HVAC_System/base_cool_standby'];
+        var baseEco = dev['KNX_HVAC_System/base_cool_eco'];
+        
+        if (baseComfort && baseStandby && baseEco) {
+            var expectedWorkComfort = baseComfort + shiftComfort;
+            var expectedWorkStandby = baseStandby + shiftStandby;
+            var expectedWorkEco = baseEco + shiftEco;
+            
+            log('Ожидаемые рабочие уставки: Comfort=' + expectedWorkComfort + '°C, Standby=' + expectedWorkStandby + '°C, ECO=' + expectedWorkEco + '°C');
+        }
+    }
+});
+
 // Правило для изменения режима HVAC (параметр 60)
 defineRule({
     when: function() {
         return dev['KNX_HVAC_System/hvac_mode_manual'];
     },
     then: function() {
-        var modeSwitch = dev['KNX_HVAC_System/hvac_mode_manual'];
+        var modeValue = dev['KNX_HVAC_System/hvac_mode_manual'];
         log('=== ИЗМЕНЕНИЕ РЕЖИМА HVAC ===');
-        log('Переключатель режима: ' + modeSwitch);
+        log('Новый режим: ' + modeValue);
         
-        if (modeSwitch) {
-            // Если включен, устанавливаем режим Comfort (1)
-            dev['Room_2_IN/HVACModeOptim_60'] = 1;
-            log('Отправлена команда: режим Comfort (1)');
-            dev['KNX_HVAC_System/status'] = "Режим Comfort отправлен: " + new Date().toLocaleTimeString();
-        } else {
-            // Если выключен, возвращаем в Auto (0)
-            dev['Room_2_IN/HVACModeOptim_60'] = 0;
-            log('Отправлена команда: режим Auto (0)');
-            dev['KNX_HVAC_System/status'] = "Режим Auto отправлен: " + new Date().toLocaleTimeString();
+        // Отправляем команду на изменение режима HVAC
+        dev['Room_2_IN/HVACModeOptim_60'] = modeValue;
+        log('Отправлена команда: режим HVAC ' + modeValue);
+        
+        // Обновляем статус с описанием режима
+        var modeText = "";
+        switch(modeValue) {
+            case 0: modeText = "Auto"; break;
+            case 1: modeText = "Comfort"; break;
+            case 2: modeText = "Standby"; break;
+            case 3: modeText = "Economy"; break;
+            case 4: modeText = "Frost protection"; break;
+            default: modeText = "Неизвестно (" + modeValue + ")";
         }
+        
+        dev['KNX_HVAC_System/status'] = "Режим " + modeText + " отправлен: " + new Date().toLocaleTimeString();
     }
 });
 
@@ -667,54 +775,55 @@ defineRule({
 
 // Тестирование
 function testProcessing() {
-    log('=== ТЕСТИРОВАНИЕ ОБРАБОТКИ ПАРАМЕТРОВ ===');
-    
-    var test67 = '0x00 0x0d 0x14 0x0d 0xaa 0x0e 0x40';
-    var result67 = processParameter(test67);
-    log('Тест 67: ' + test67);
-    if (result67) {
-        log('  Результат (float): val1=' + result67.val1 + ', val2=' + result67.val2 + ', val3=' + result67.val3);
-    }
-    
-    var test69 = '0x00 0x86 0xd4 0x00 0x00 0x00 0x00';
-    var result69 = processParameter(test69);
-    log('Тест 69: ' + test69);
-    if (result69) {
-        log('  Результат (float): val1=' + result69.val1 + ', val2=' + result69.val2 + ', val3=' + result69.val3);
-    }
-    
-    var test105 = '0x00 0x4c 0x0d 0x4c 0x0d 0x4c 0x0d';
-    var result105 = processParameter(test105);
-    log('Тест 105: ' + test105);
-    if (result105) {
-        log('  Результат (float): val1=' + result105.val1 + ', val2=' + result105.val2 + ', val3=' + result105.val3);
-    }
+    try {
+        log('=== ТЕСТИРОВАНИЕ ОБРАБОТКИ ПАРАМЕТРОВ ===');
+        
+        var test67 = '0x00 0x0d 0x14 0x0d 0xaa 0x0e 0x40';
+        var result67 = parseKnxTriplet(test67);
+        log('Тест 67: ' + test67);
+        if (result67) {
+            log('  Результат (float): val1=' + result67.val1 + ', val2=' + result67.val2 + ', val3=' + result67.val3);
+        }
+        
+        var test69 = '0x00 0x86 0xd4 0x00 0x00 0x00 0x00';
+        var result69 = parseKnxTriplet(test69);
+        log('Тест 69: ' + test69);
+        if (result69) {
+            log('  Результат (float): val1=' + result69.val1 + ', val2=' + result69.val2 + ', val3=' + result69.val3);
+        }
+        
+        var test105 = '0x00 0x4c 0x0d 0x4c 0x0d 0x4c 0x0d';
+        var result105 = parseKnxTriplet(test105);
+        log('Тест 105: ' + test105);
+        if (result105) {
+            log('  Результат (float): val1=' + result105.val1 + ', val2=' + result105.val2 + ', val3=' + result105.val3);
+        }
     
     // Тестируем отдельные функции преобразования
     log('=== СРАВНЕНИЕ МЕТОДОВ ПРЕОБРАЗОВАНИЯ ===');
     
     // Тест для ожидаемых значений
-    var test1 = simpleBytesToFloat('0x0d', '0x14');  // Должно быть ~26.00
-    var test2 = simpleBytesToFloat('0x0d', '0xaa');  // Должно быть ~29.00  
-    var test3 = simpleBytesToFloat('0x0e', '0x40');  // Должно быть ~32.00
+    var test1 = knx2bToFloat('0x0d', '0x14');  // Должно быть ~26.00
+    var test2 = knx2bToFloat('0x0d', '0xaa');  // Должно быть ~29.00  
+    var test3 = knx2bToFloat('0x0e', '0x40');  // Должно быть ~32.00
     
     log('0x0d 0x14 (ожидается ~26.00): ' + test1);
     log('0x0d 0xaa (ожидается ~29.00): ' + test2);
     log('0x0e 0x40 (ожидается ~32.00): ' + test3);
     
     // Тест для параметра 69
-    var test69_1 = simpleBytesToFloat('0x86', '0xd4');
+    var test69_1 = knx2bToFloat('0x86', '0xd4');
     log('0x86 0xd4 (параметр 69): ' + test69_1);
     
     // Тест для параметра 105
-    var test105_1 = simpleBytesToFloat('0x4c', '0x0d');
+    var test105_1 = knx2bToFloat('0x4c', '0x0d');
     log('0x4c 0x0d (параметр 105): ' + test105_1);
     
-    // Тестируем функцию valueToKnxBytes
-    log('=== ТЕСТИРОВАНИЕ valueToKnxBytes ===');
-    var testBytes1 = valueToKnxBytes(1.0);  // Сдвиг +1K
-    var testBytes2 = valueToKnxBytes(-1.0); // Сдвиг -1K
-    var testBytes3 = valueToKnxBytes(0.0);  // Сдвиг 0K
+    // Тестируем функцию floatToKnx2b
+    log('=== ТЕСТИРОВАНИЕ floatToKnx2b ===');
+    var testBytes1 = floatToKnx2b(1.0);  // Сдвиг +1K
+    var testBytes2 = floatToKnx2b(-1.0); // Сдвиг -1K
+    var testBytes3 = floatToKnx2b(0.0);  // Сдвиг 0K
     
     if (testBytes1) log('Тест +1K: ' + testBytes1.byte1 + ' ' + testBytes1.byte2);
     if (testBytes2) log('Тест -1K: ' + testBytes2.byte1 + ' ' + testBytes2.byte2);
@@ -779,96 +888,110 @@ function testProcessing() {
     dev['KNX_HVAC_System/status'] = "Тест завершен: " + new Date().toLocaleTimeString();
     
     log('=== ТЕСТИРОВАНИЕ ЗАВЕРШЕНО ===');
+    
+    } catch (error) {
+        log('Ошибка в testProcessing: ' + error);
+        dev['KNX_HVAC_System/status'] = "Ошибка тестирования: " + error;
+    }
 }
 
 testProcessing(); 
 
-// Функция для преобразования числа в KNX байты (обратная функция)
-function valueToKnxBytes(value) {
+// === DPT9 encode: число -> 2 байта ===
+function floatToKnx2b(value) {
     try {
-        log('Преобразуем значение в KNX байты: ' + value);
+        log('=== ПРЕОБРАЗОВАНИЕ В KNX БАЙТЫ ===');
+        log('Входное значение: ' + value);
         
-        var floatval = parseFloat(value) * 100;
-        log('Умноженное на 100: ' + floatval);
-        
-        var exp = 1;
-        var mant = floatval;
-        
-        // Ищем подходящую экспоненту
-        for (var i = 0; i < 16; i++) {
-            exp = Math.pow(2, i);
-            mant = floatval / exp;
-            log('Попытка ' + i + ': exp=' + exp + ', mant=' + mant);
-            
-            if (mant >= -2048 && mant <= 2047) {
-                log('Найдена подходящая экспонента: ' + i + ', mant=' + mant);
-                break;
-            }
+        // Проверяем входное значение
+        if (typeof value !== 'number' || isNaN(value)) {
+            log('Ошибка: входное значение не является числом');
+            return null;
         }
         
-        var sign = 0;
-        var mantissa;
-        
-        if (floatval < 0) {
-            sign = 1;
-            mantissa = Math.floor(2048 + (floatval / exp));
-            log('Отрицательное число: sign=1, mantissa=' + mantissa);
-        } else {
-            sign = 0;
-            mantissa = Math.floor(floatval / exp);
-            log('Положительное число: sign=0, mantissa=' + mantissa);
+        // масштаб 0.01
+        var v = Math.round(value * 100);  // целое
+        var signBit = 0;
+        if (v < 0) { 
+            signBit = 1; 
+            v = -v; 
         }
-        
-        var byte1 = ((sign << 7) | (i << 3) | (mantissa >> 8)) & 0xFF;
-        var byte2 = mantissa & 0xFF;
-        
-        log('Результат: byte1=' + byte1 + ' (0x' + byte1.toString(16) + '), byte2=' + byte2 + ' (0x' + byte2.toString(16) + ')');
-        
-        // Формируем hex строки без padStart
-        var hex1 = '0x' + (byte1 < 16 ? '0' : '') + byte1.toString(16);
-        var hex2 = '0x' + (byte2 < 16 ? '0' : '') + byte2.toString(16);
-        
-        log('Hex строки: ' + hex1 + ', ' + hex2);
-        
-        return {
-            byte1: hex1,
-            byte2: hex2
+
+        // подбираем экспоненту так, чтобы |mant| <= 2047
+        var exp = 0;
+        while (v > 2047 && exp < 15) { 
+            v = v >> 1; 
+            exp++; 
+        }
+
+        // возвращаем знак
+        var mant = signBit ? -v : v;              // signed 11-bit
+        if (mant < 0) mant = (mant + 0x800) & 0x7FF;
+
+        var raw = (signBit << 15) | (exp << 11) | mant;
+        var hi = (raw >> 8) & 0xFF;
+        var lo = raw & 0xFF;
+
+        log('Результат: hi=' + hi + ' (0x' + hi.toString(16) + '), lo=' + lo + ' (0x' + lo.toString(16) + ')');
+
+        var result = {
+            byte1: '0x' + (hi < 16 ? '0' : '') + hi.toString(16),
+            byte2: '0x' + (lo < 16 ? '0' : '') + lo.toString(16)
         };
+        
+        log('Сформированы байты: ' + result.byte1 + ' ' + result.byte2);
+        return result;
+        
     } catch (error) {
         log('Ошибка при преобразовании в KNX байты: ' + error);
         return null;
     }
 }
 
-// Функция для формирования hex строки из 6 байтов
-function createHexString(bytes1, bytes2, bytes3) {
-    if (!bytes1 || !bytes2 || !bytes3) {
+// Функция для формирования hex строки из 6 байтов (без префикса 0x00)
+function buildTripletHex(v1, v2, v3) {
+    try {
+        var a = floatToKnx2b(v1);
+        var b = floatToKnx2b(v2);
+        var c = floatToKnx2b(v3);
+        
+        if (!a || !b || !c) {
+            log('Ошибка: не удалось преобразовать значения в KNX байты');
+            return null;
+        }
+        
+        var result = a.byte1 + ' ' + a.byte2 + ' ' + b.byte1 + ' ' + b.byte2 + ' ' + c.byte1 + ' ' + c.byte2;
+        log('Сформирована hex строка: ' + result);
+        return result;
+        
+    } catch (error) {
+        log('Ошибка в buildTripletHex: ' + error);
         return null;
     }
-    
-    // Формируем строку: 0x00 + 6 байтов
-    var hexString = '0x00 ' + bytes1.byte1 + ' ' + bytes1.byte2 + ' ' + 
-                    bytes2.byte1 + ' ' + bytes2.byte2 + ' ' + 
-                    bytes3.byte1 + ' ' + bytes3.byte2;
-    
-    return hexString;
 }
 
 // Функция для вычисления сдвигов и отправки команд
 function calculateAndSendShifts() {
     try {
+        log('🚀 === ВЫЧИСЛЕНИЕ СДВИГОВ ===');
+        
         // Получаем заданные температуры
         var comfortTemp = dev['KNX_HVAC_System/set_comfort_temp'];
         var standbyTemp = dev['KNX_HVAC_System/set_standby_temp'];
         var ecoTemp = dev['KNX_HVAC_System/set_eco_temp'];
+        
+        log('📊 Заданные температуры: Comfort=' + comfortTemp + '°C, Standby=' + standbyTemp + '°C, ECO=' + ecoTemp + '°C');
         
         // Получаем базовые уставки
         var baseComfort = dev['KNX_HVAC_System/base_cool_comfort'];
         var baseStandby = dev['KNX_HVAC_System/base_cool_standby'];
         var baseEco = dev['KNX_HVAC_System/base_cool_eco'];
         
-        if (!baseComfort || !baseStandby || !baseEco) {
-            log('Ошибка: базовые уставки не загружены');
+        log('📊 Базовые уставки: Comfort=' + baseComfort + '°C, Standby=' + baseStandby + '°C, ECO=' + baseEco + '°C');
+        
+        if (typeof baseComfort === 'undefined' || typeof baseStandby === 'undefined' || typeof baseEco === 'undefined') {
+            log('❌ Ошибка: базовые уставки не загружены');
+            dev['KNX_HVAC_System/status'] = "Ошибка: базовые уставки не загружены";
             return;
         }
         
@@ -877,23 +1000,30 @@ function calculateAndSendShifts() {
         var shiftStandby = standbyTemp - baseStandby;
         var shiftEco = ecoTemp - baseEco;
         
-        log('Вычисленные сдвиги: Comfort=' + shiftComfort + 'K, Standby=' + shiftStandby + 'K, ECO=' + shiftEco + 'K');
+        log('🧮 Вычисленные сдвиги: Comfort=' + shiftComfort + 'K, Standby=' + shiftStandby + 'K, ECO=' + shiftEco + 'K');
         
         // Преобразуем сдвиги в KNX байты
-        var bytesComfort = valueToKnxBytes(shiftComfort);
-        var bytesStandby = valueToKnxBytes(shiftStandby);
-        var bytesEco = valueToKnxBytes(shiftEco);
+        log('🔧 Преобразуем сдвиги в KNX байты...');
+        var bytesComfort = floatToKnx2b(shiftComfort);
+        var bytesStandby = floatToKnx2b(shiftStandby);
+        var bytesEco = floatToKnx2b(shiftEco);
         
         if (!bytesComfort || !bytesStandby || !bytesEco) {
-            log('Ошибка: не удалось преобразовать сдвиги в байты');
+            log('❌ Ошибка: не удалось преобразовать сдвиги в байты');
+            dev['KNX_HVAC_System/status'] = "Ошибка: не удалось преобразовать сдвиги в байты";
             return;
         }
         
+        log('✅ Сдвиги преобразованы в байты: Comfort=' + bytesComfort.byte1 + ' ' + bytesComfort.byte2 + 
+            ', Standby=' + bytesStandby.byte1 + ' ' + bytesStandby.byte2 + 
+            ', ECO=' + bytesEco.byte1 + ' ' + bytesEco.byte2);
+        
         // Формируем hex строку для параметра 69
-        var hexString69 = createHexString(bytesComfort, bytesStandby, bytesEco);
+        log('🔧 Формируем hex строку для параметра 69...');
+        var hexString69 = buildTripletHex(shiftComfort, shiftStandby, shiftEco);
         
         if (hexString69) {
-            log('Сформирована hex строка для параметра 69: ' + hexString69);
+            log('✅ Сформирована hex строка для параметра 69: ' + hexString69);
             
             // Отправляем команду на изменение параметра 69
             dev['Room_2_IN/TRSetpSetCoolSh_69'] = hexString69;
@@ -901,11 +1031,23 @@ function calculateAndSendShifts() {
             // Обновляем статус
             dev['KNX_HVAC_System/status'] = "Сдвиги отправлены: " + new Date().toLocaleTimeString();
             
-            log('Команда на изменение параметра 69 отправлена');
+            log('🚀 Команда на изменение параметра 69 отправлена: ' + hexString69);
+            log('📤 Отправлено в KNX устройство: Room_2_IN/TRSetpSetCoolSh_69');
+            
+            // Обновляем отображение сдвигов в виртуальном устройстве
+            dev['KNX_HVAC_System/shift_cool_comfort'] = shiftComfort;
+            dev['KNX_HVAC_System/shift_cool_standby'] = shiftStandby;
+            dev['KNX_HVAC_System/shift_cool_eco'] = shiftEco;
+            
+            log('📊 Обновлены сдвиги в виртуальном устройстве');
+            
+        } else {
+            log('❌ Ошибка: не удалось сформировать hex строку для параметра 69');
+            dev['KNX_HVAC_System/status'] = "Ошибка формирования команды";
         }
         
     } catch (error) {
-        log('Ошибка при вычислении сдвигов: ' + error);
+        log('❌ Ошибка при вычислении сдвигов: ' + error);
         dev['KNX_HVAC_System/status'] = "Ошибка: " + error;
     }
 } 
